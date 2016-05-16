@@ -1,3 +1,9 @@
+tarantool-luaossl (20160516-0) unstable; urgency=low
+
+  * Rebuild for tarantool
+
+ -- Konstantin Nazarov <mail@racktear.com>  Mon, 16 May 2016 18:00:00 +0300
+
 liblua-openssl (20151221-0) unstable; urgency=low
 
   * Add :tohex and :todec methods to bignums, and make metamethods

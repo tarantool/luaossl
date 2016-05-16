@@ -2,9 +2,10 @@
 
 CFLAGS := -O3 -g -fstack-protector --param=ssp-buffer-size=4
 
-DESTDIR=debian/tmp
+DESTDIR_TMP=debian/tmp
+DESTDIR=debian/tarantool-luaossl
 prefix=/usr
-build=liblua5.1-openssl liblua5.2-openssl
+build=liblua5.1-openssl
 install=$(addsuffix -install,$(build))
 
 %:
@@ -17,7 +18,11 @@ override_dh_auto_build:
 	make DESTDIR=$(DESTDIR) prefix=$(prefix) $(build)
 
 override_dh_auto_install:
-	make DESTDIR=$(DESTDIR) prefix=$(prefix) $(install)
+	make DESTDIR=$(DESTDIR_TMP) prefix=$(prefix) $(install)
+	mkdir -p $(DESTDIR)/usr/lib/x86_64-linux-gnu/tarantool/
+	mkdir -p $(DESTDIR)/usr/share/tarantool/
+	mv $(DESTDIR_TMP)/usr/lib/lua/5.1/_openssl.so $(DESTDIR)/usr/lib/x86_64-linux-gnu/tarantool/_openssl.so
+	mv $(DESTDIR_TMP)/usr/share/lua/5.1/* $(DESTDIR)/usr/share/tarantool/
 
 override_dh_auto_clean:
 	make clean
